@@ -1,0 +1,1 @@
+Run legacyopt2 for complete optimization of stats, items, and crystals
