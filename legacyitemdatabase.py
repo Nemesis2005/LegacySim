@@ -60,6 +60,10 @@ sg12v1p1ab.socket([pvoid,ppink,pvoid,abyss])
 scbomb4ammy = copy.copy(scbomb)
 scbomb4ammy.socket([amcrys,amcrys,amcrys,amcrys])
 
+#Concentrated Crystal Bombs
+concbomb3ammy1f = copy.copy(concbomb)
+concbomb3ammy1f.socket([amcrys,amcrys,amcrys,pfire])
+
 #T2 Scythes
 t2scythe4f = copy.copy(t2scythe)
 t2scythe4f.socket([pfire,pfire,pfire,pfire])
@@ -113,6 +117,8 @@ q154amcrys.socket([amcrys,amcrys,amcrys,amcrys])
 # Double Barrel Sniper
 dbarrel4f = copy.copy(dbarrel)
 dbarrel4f.socket([pfire,pfire,pfire,pfire])
+dbarrel3am1f = copy.copy(dbarrel)
+dbarrel3am1f.socket([amcrys,amcrys,amcrys,pfire])
 dbarrel3pr1f = copy.copy(dbarrel)
 dbarrel3pr1f.socket([primecrys,primecrys,primecrys,pfire])
 

@@ -1,12 +1,13 @@
 #Main Optimization Program
 #Optimizes the stats of currently equipped weapon
-#FUNCTIONS ONLY, FOR USE, USE legacyoptimization2.py
+#FUNCTIONS ONLY, FOR USE, USE legacyopt2.py
 ###########################################################################
 #imports modules
 ############################################################################
 import copy
 import numpy
 import legacychance
+import legacycommon
 
 
 ###########################################################################
@@ -20,9 +21,9 @@ import legacychance
 #among acc and dod
 #atype ='standard', 'quick','aimed', 'takecover'
 def opthp(p1,p2list,weight,minhp,maxhp,atype = 'standard'):
-    ###total distributable stats
-    tstats = 171
     #initial values
+    minhp = max(10, minhp)
+    maxhp = max(10, maxhp)
     hp1 = minhp
     hp4 = maxhp
     hp3 = (hp4-hp1)*(2.0/(1+numpy.sqrt(5))) + hp1
@@ -36,7 +37,7 @@ def opthp(p1,p2list,weight,minhp,maxhp,atype = 'standard'):
         hps = (hplist-10-(hplist%5))/5
 
         #total distributable stat points left
-        tstatsleft = tstats - hps
+        tstatsleft = legacycommon.tstats - hps
 
         #distributes the rest of the stat points into acc and dodge evenly
         #with more to acc if uneven
@@ -78,12 +79,10 @@ def opthp(p1,p2list,weight,minhp,maxhp,atype = 'standard'):
     hplist[1] = (hplist[1] + hplist[2])/2.0
     hplist[2] = copy.copy(hplist[1])
     hps = (hplist-10-(hplist%5))/5
-    hps[2] += 1
     hplist = hps*5+10
 
     #total distributable stat points left
-    tstatsleft = tstats - hps
-
+    tstatsleft = legacycommon.tstats - hps
 
     #distributes the rest of the stat points into acc and dodge evenly
     #with more to acc if uneven
@@ -98,7 +97,6 @@ def opthp(p1,p2list,weight,minhp,maxhp,atype = 'standard'):
     #creates a list of player object for each stats and calculates
     #the rating for each and returns the maximum
     p1list = numpy.array([copy.copy(p1) for i in range(4)])
-    ratings = numpy.empty(4,dtype=float)
     maxim = [0,copy.copy(p1)]
     for i in range(len(p1list)):
         p1list[i].speed = 60
@@ -117,10 +115,10 @@ def opthp(p1,p2list,weight,minhp,maxhp,atype = 'standard'):
             p1list[i].takecover()
         
         #calculates ratings of each stats
-        ratings[i] = legacychance.rating(p1list[i],p2list,weight)[0]
+        ratings = legacychance.rating(p1list[i],p2list,weight)[0]
         #calculates the maximum
-        if maxim[0]<ratings[i]:
-            maxim[0] = ratings[i]
+        if maxim[0] < ratings:
+            maxim[0] = ratings
             maxim[1] = p1list[i]
             
     #returns stats with maximum legacychance.rating
@@ -131,8 +129,9 @@ def opthp(p1,p2list,weight,minhp,maxhp,atype = 'standard'):
 #among acc and dod
 def optspeed(p1,p2list,weight,minspeed,maxspeed,atype='standard'):
     ###total distributable stats
-    tstats = 171
     #initial values
+    minspeed = max(60, minspeed)
+    maxspeed = max(60, maxspeed)
     speed1 = minspeed
     speed4 = maxspeed
     speed3 = (speed4-speed1)*(2.0/(1+numpy.sqrt(5))) + speed1
@@ -146,7 +145,7 @@ def optspeed(p1,p2list,weight,minspeed,maxspeed,atype='standard'):
         speeds = (speedlist-60-(p1.speed%5))/5
 
         #total distributable stat points left
-        tstatsleft = tstats - speeds - (p1.hp-10)/5
+        tstatsleft = legacycommon.tstats - speeds - (p1.hp-10)/5
 
         #distributes the rest of the stat points into acc and dodge evenly
         #with more to acc if uneven
@@ -187,11 +186,12 @@ def optspeed(p1,p2list,weight,minspeed,maxspeed,atype='standard'):
     speedlist[1] = (speedlist[1] + speedlist[2])/2.0
     speedlist[2] = copy.copy(speedlist[1])
     speeds = (speedlist-60-(speedlist%5))/5
-    speeds[2] += 1
+    if speedlist[0] < speedlist[3]:
+        speedlist[2] += 1
     speedlist = speeds*5+60
 
     #total distributable stat points left
-    tstatsleft = tstats - speeds - (p1.hp-10)/5
+    tstatsleft = legacycommon.tstats - speeds - (p1.hp-10)/5
 
 
     #distributes the rest of the stat points into acc and dodge evenly
@@ -207,7 +207,6 @@ def optspeed(p1,p2list,weight,minspeed,maxspeed,atype='standard'):
     #creates a list of player object for each stats and calculates
     #the rating for each and returns the maximum
     p1list = numpy.array([copy.copy(p1) for i in range(4)])
-    ratings = numpy.empty(4,dtype=float)
     maxim = [0,copy.copy(p1)]
     for i in range(len(p1list)):
         p1list[i].speed = int(speedlist[i])
@@ -215,10 +214,10 @@ def optspeed(p1,p2list,weight,minspeed,maxspeed,atype='standard'):
         p1list[i].dod = dods[i]+14
         
         #calculates rating of each stats
-        ratings[i] = legacychance.rating(p1list[i],p2list,weight)[0]
+        ratings = legacychance.rating(p1list[i],p2list,weight)[0]
         #calculates the maximum
-        if maxim[0]<ratings[i]:
-            maxim[0] = ratings[i]
+        if maxim[0] < ratings:
+            maxim[0] = ratings
             maxim[1] = p1list[i]
             
     #returns stats with maximum rating
@@ -227,14 +226,12 @@ def optspeed(p1,p2list,weight,minspeed,maxspeed,atype='standard'):
 #This function optimizes the acc and dod stats using golden ratio search
 #and finds the combination with highest rating and returns it
 def optaccdod(p1,p2list,weight,atype='standard'):
-    ###total distributable stats
-    tstats = 171
     #total stats left
-    tstatsleft = tstats-(p1.hp-10)/5-(p1.speed-60)/5
+    tstatsleft = legacycommon.tstats-(p1.hp-10)/5-(p1.speed-60)/5
     #minimum acc to optimize from
     minacc = 14
     #maximum acc to optimize from
-    maxacc = 14+tstatsleft
+    maxacc = 14 + tstatsleft
     #initial values
     acc1 = minacc
     acc4 = maxacc
@@ -275,7 +272,6 @@ def optaccdod(p1,p2list,weight,atype='standard'):
     acclist[3] = maxacc
     acclist[1] = int((acclist[1] + acclist[2])/2.0)
     acclist[2] = copy.copy(acclist[1])
-    acclist[2] += 1
     #converts acclist to int and calculates dodlist
     temp = numpy.empty(4,dtype=int)
     for i in range(4):
@@ -286,17 +282,16 @@ def optaccdod(p1,p2list,weight,atype='standard'):
     #creates a list of player object for each stats and calculates
     #the rating for each and returns the maximum
     p1list = numpy.array([copy.copy(p1) for i in range(4)])
-    ratings = numpy.empty(4,dtype=float)
     maxim = [0,copy.copy(p1)]
     for i in range(len(p1list)):
         p1list[i].acc = acclist[i]
         p1list[i].dod = dodlist[i]
         
         #calculates rating of each stats
-        ratings[i] = legacychance.rating(p1list[i],p2list,weight)[0]
+        ratings = legacychance.rating(p1list[i],p2list,weight)[0]
         #calculates the maximum
-        if maxim[0]<ratings[i]:
-            maxim[0] = ratings[i]
+        if maxim[0] < ratings:
+            maxim[0] = ratings
             maxim[1] = p1list[i]
             
     #returns stats with maximum rating

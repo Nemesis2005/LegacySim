@@ -263,52 +263,52 @@ nomisc = equip(0,0,0,0,0,0,0,0,0,0,'misc','nomisc')
 csword = equip(68,84,0,34,0,70,26,0,0,14,'melee','Crystal Sword')
 
 #T2 Crystal Sword
-t2csword = equip(74,95,0,37,0,77,35,0,0,17,'melee','T2 Crystal Sword')
+t2csword = equip(84,95,0,50,0,77,38,0,0,40,'melee','T2 Crystal Sword')
 
 #Rail Gun
 rgun = equip(56,88,0,36,0,70,0,0,26,14,'gun','Rail Gun')
 
 #T2 Rail Gun
-t2rgun = equip(70,90,0,39,0,74,0,0,34,16,'gun','T2 Rail Gun')
+t2rgun = equip(60,105,0,49,0,69,0,0,47,18,'gun','T2 Rail Gun')
 
 #Crystal Bomb
 cbomb = equip(62,86,0,35,0,70,0,26,0,14,'projectile','Crystal Bomb')
 
 #T2 Crystal Bomb
-t2cbomb = equip(66,97,0,38,0,77,0,38,0,14,'projectile','T2 Crystal Bomb')
+t2cbomb = equip(66,97,0,48,0,77,0,51,0,16,'projectile','T2 Crystal Bomb')
 
 #Concentrated Crystal Bomb
-concbomb = equip(87,112,0,35,0,65,0,9,0,5,'projectile','Concentrated Crystal Bomb')
+concbomb = equip(87,112,0,73,0,0,0,0,0,0,'projectile','Concentrated Crystal Bomb')
 
 #Split Crystal Bomb
-scbomb = equip(55,87,0,23,0,79,0,84,0,83,'projectile','Split Crystal Bomb')
+scbomb = equip(55,87,0,23,0,79,0,84,0,80,'projectile','Split Crystal Bomb')
 
 #Chain Blade
 chain = equip(72,88,0,33,0,60,30,0,0,10,'melee','Chain Blade')
 
 #T2 Chain Blade
-t2chain = equip(78,94,0,37,0,72,37,0,0,10,'melee','T2 Chain Blade')
+t2chain = equip(82,98,0,48,0,82,61,0,0,12,'melee','T2 Chain Blade')
 
 #Scythe
 scythe = equip(76,92,0,31,0,60,40,0,0,10,'melee','Scythe')
 
 #T2 Scythe
-t2scythe = equip(80,101,0,38,0,75,41,0,0,10,'melee','T2 Scythe')
+t2scythe = equip(80,101,0,42,0,75,65,0,0,18,'melee','T2 Scythe')
 
 #Void Sword
-void = equip(90,128,0,28,0,60,20,0,0,5,'melee','Void Sword')
+void = equip(90,120,0,35,0,60,40,0,0,5,'melee','Void Sword')
 
 #Rift Gun
 rift = equip(60,65,0,85,0,50,0,0,85,5,'gun','Rift Gun')
 
 #Core Ctaff
-cstaff = equip(45,55,0,55,0,75,130,0,0,50,'melee','Core Staff')
+cstaff = equip(50,60,0,55,0,75,110,0,0,50,'melee','Core Staff')
 
 #Void Axe
-vaxe = equip(60,90,0,39,0,70,32,0,0,15,'melee','Void Axe')
+vaxe = equip(68,96,0,44,0,78,80,0,0,30,'melee','Void Axe')
 
 #Void Bow
-vbow = equip(5,125,0,48,0,70,0,65,0,20,'projectile','Void Bow')
+vbow = equip(10,125,0,48,0,70,0,65,0,20,'projectile','Void Bow')
 
 #Void Bow with Laser Sight
 vbowls = copy.copy(vbow)
@@ -318,6 +318,10 @@ vbowls.modslot([lsight])
 vbowpt = copy.copy(vbow)
 vbowpt.modslot([ptip])
 
+# Void Bow with 2 Poisoned Tip
+vbow2pt = copy.copy(vbow)
+vbow2pt.modslot([ptip, ptip])
+
 #Havoc Launcher
 hlauncher = equip(50,60,0,50,0,50,0,0,50,50,'gun','Havoc Launcher')
 
@@ -325,7 +329,7 @@ hlauncher = equip(50,60,0,50,0,50,0,0,50,50,'gun','Havoc Launcher')
 q15 = equip(82,95,0,42,0,120,0,0,33,21,'gun','Q15')
 
 # Duble Barrel Sniper Rifle
-dbarrel = equip(89,91,0,83,0,0,0,0,0,0,'gun','Double Barrel')
+dbarrel = equip(90,95,0,85,0,0,0,0,0,0,'gun','Double Barrel Sniper')
 
 ##########
 ##Armors##
@@ -335,10 +339,10 @@ dbarrel = equip(89,91,0,83,0,0,0,0,0,0,'gun','Double Barrel')
 titan = equip(0,0,40,0,68,55,0,0,0,40,'armor','Titan Armor')
 
 #Hellforge Armor
-hf = equip(0,0,105,0,55,65,0,0,0,50,'armor','Hellforge Armor')
+hf = equip(0,0,115,0,60,55,0,0,0,55,'armor','Hellforge Armor')
 
 #Dark Legion Armor
-dl = equip(0,0,51,0,90,65,0,0,0,50,'armor','Dark Legion Armor')
+dl = equip(0,0,65,0,90,65,0,0,0,50,'armor','Dark Legion Armor')
 
 #SG1 Armor
 sg1 = equip(0,0,70,0,75,65,0,0,0,90,'armor','SG1 Armor')
@@ -360,7 +364,7 @@ aeon = equip(0,0,0,6,6,0,25,25,25,25,'misc','Aeon Amulet')
 prime = equip(0,0,0,4,4,0,30,30,30,30,'misc','Prime Amulet')
 
 #Orphic Amulet
-orphic = equip(0,0,0,10,10,0,50,50,50,-25,'misc','Orphic Amulet')
+orphic = equip(0,0,0,10,10,0,50,50,50,10,'misc','Orphic Amulet')
 
 #Inferno Amulet
 inferno = equip(0,0,0,8,8,0,40,40,40,40,'misc','Inferno Amulet')

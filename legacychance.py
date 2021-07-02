@@ -4,6 +4,7 @@
 #Imports Modules
 ##########################################################################
 import math
+import legacycommon
 ###########################################################################
 #User Defined Functions
 ###########################################################################
@@ -109,10 +110,11 @@ def avdam(p1,p2):
     hit,dam1,dam2 = tohit(p1,p2)
     #calculates average damage of player 1 with weapon 1
     level = min(p1.level, 80)
-    modifier = level * 1.5
-    weap1ave = ((p1.tmind1 + p1.tmaxd1)/2.0) * (modifier/(modifier + p2.tarmor))
+    modifier = level * legacycommon.armor_mult
+    mult = (modifier/(modifier + p2.tarmor))
+    weap1ave = (math.ceil(p1.tmind1 * mult) + math.ceil(p1.tmaxd1 * mult))/2.0
     #calculates average damage of player 2 with weapon 2
-    weap2ave = ((p1.tmind2 + p1.tmaxd2)/2.0) * (modifier/(modifier + p2.tarmor))
+    weap2ave = (math.ceil(p1.tmind2 * mult) + math.ceil(p1.tmaxd2 * mult))/2.0
 
     #calculates damage per turn and returns it
     damperturn = weap1ave*(hit/100)*(dam1/100) + weap2ave*(hit/100)*(dam2/100)
@@ -121,25 +123,19 @@ def avdam(p1,p2):
 #This function returns the avg # of turns it takes for p1 to kill p2
 def avturns(p1,p2):
     p1avdam = avdam(p1,p2)
-    return p2.hp/p1avdam
+    return max(1.0, p2.hp/p1avdam)
 
 #This function returns the ratio of avg # of turns it takes for p1 to kill p2
 #and for p2 to kill p1
 def avtratio(p1,p2):
     p1avt = avturns(p1,p2)
     p2avt = avturns(p2,p1)
-    #if player 1 has greater or equal speed then add +1 avturn to player 2
+    #if player 1 has greater or equal speed then add + 0.5 avturn to player 2
     if p1.tspeed> p2.tspeed:
-        if p1avt>1.0:
-            p1avt -= 1.0
-        else:
-            p2avt += 1.0
-    #Otherwise, add +1 avturn to player 1
+        p2avt += 0.5
+    #Otherwise, add + 0.5 avturn to player 1
     elif p1.tspeed<p2.tspeed:
-        if p2avt>1.0:
-            p2avt -= 1.0
-        else:
-            p1avt += 1.0
+        p1avt += 0.5
     rate1 = p2avt/(p1avt+p2avt)
     rate2 = p1avt/(p1avt+p2avt)
     return rate1,rate2
@@ -165,7 +161,6 @@ def rating(p1,p2list,weight):
         p2list[i].standard()
         temp1, temp2 = avtratio(p1,p2list[i])
 
-
         #calculates the avtratio when defending
         #changes attack of player 2 to default
         if p2list[i].atype == "standard":
@@ -179,13 +174,13 @@ def rating(p1,p2list,weight):
         #changes the attack of player 1 to default
         p1.standard()
         temp3, temp4 = avtratio(p1,p2list[i])
-        
+
         #takes the average of the two ratings
         avtrats.append((temp1+temp3)/2.0)
 
         #calculates the weighted mean
         mean += avtrats[i]*weight[i]
-        
+
     #calculates the mean and returns it
     mean /= n
     return mean, avtrats

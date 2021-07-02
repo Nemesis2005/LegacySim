@@ -30,9 +30,9 @@ RiftKing = legacystats.pstats(hp,acc,dod,speed, mskill,pskill,gskill,dskill,\
 #Q15King
 #############################################################################
 #Please include abilities too
-hp = 450
+hp = 600
 acc = 14
-dod = 93
+dod = 63
 speed = 80
 mskill = 450
 pskill = 450
@@ -49,8 +49,8 @@ Q15King = legacystats.pstats(hp,acc,dod,speed, mskill,pskill,gskill,dskill,\
 #MeleeKing
 #############################################################################
 #Please include abilities too
-hp = 450
-acc = 91
+hp = 600
+acc = 61
 dod = 14
 speed = 90
 mskill = 450
@@ -100,6 +100,45 @@ dskill = 450
 DoubleVBowKing = legacystats.pstats(hp,acc,dod,speed, mskill,pskill,gskill,dskill,\
             mind = 5, maxd = 5,armor = 5, weap1 = vbowpt4amcrys, weap2 = vbowpt4amcrys,\
             arm = hf4v, misc1 = scout4amcrys, misc2 = scout4amcrys,\
+            atype = "takecover")
+
+
+############################################################################
+#DoubleConcbombKing
+############################################################################
+#Please include abilities too
+hp = 650
+acc = 14
+dod = 57
+speed = 60
+mskill = 450
+pskill = 450
+gskill = 450
+dskill = 450
+
+#create variable for player 2 stats
+DoubleConcbKing = legacystats.pstats(hp,acc,dod,speed, mskill,pskill,gskill,dskill,\
+            mind = 5, maxd = 5,armor = 5, weap1 = concbomb3ammy1f, weap2 = concbomb3ammy1f,\
+            arm = dl4abyss, misc1 = scout4amcrys, misc2 = scout4amcrys,\
+            atype = "takecover")
+
+############################################################################
+#DbarrelKing
+############################################################################
+#Please include abilities too
+hp = 650
+acc = 14
+dod = 57
+speed = 60
+mskill = 450
+pskill = 450
+gskill = 450
+dskill = 450
+
+#create variable for player 2 stats
+DbarrelKing = legacystats.pstats(hp,acc,dod,speed, mskill,pskill,gskill,dskill,\
+            mind = 5, maxd = 5,armor = 5, weap1 = rift4amcrys, weap2 = dbarrel3am1f,\
+            arm = dl4abyss, misc1 = scout4amcrys, misc2 = scout4amcrys,\
             atype = "takecover")
 
 #############################################################################
@@ -237,7 +276,11 @@ Merlin = legacystats.pstats(hp,acc,dod,speed, mskill,pskill,gskill,dskill,\
 #Player list
 ##############################################################################
 #List of players to optimize against
-plist = [RiftKing, Q15King, MeleeKing, BombRiftKing, DoubleVBowKing, k3nny, Ryu,
-        Aaron, SGame, matt770, HappyDays, Merlin]
+plist = [RiftKing, Q15King, MeleeKing, BombRiftKing, DoubleVBowKing, DoubleConcbKing, k3nny, Ryu,
+        DbarrelKing, Aaron, SGame, matt770, HappyDays, Merlin]
+
+#plist = [DbarrelKing]
 w = numpy.ones(len(plist))
-w[4] = 1.5
+#w[5] = 2.0
+
+

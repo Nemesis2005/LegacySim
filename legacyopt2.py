@@ -27,7 +27,7 @@ wep2c = [pfire, amcrys]
 armc = [abyss, cabr, pvoid]
 #misc crystal
 #miscc = [ppink,pgreen,porange,pyellow,pair,amcrys]
-miscc = [ppink, amcrys]
+miscc = [ppink, amcrys, porange]
 
 #Stats Optimization Constants
 #minimum hp to optimize from
@@ -41,16 +41,15 @@ maxspeed = 120
 
 #Equipment Item Constants
 #Items to be iterated on
-wep = [vbowls,vbowpt,cstaff,void,rift,q15]
-#wep = [cstaff,void,rift,q15]
-arm = [dl, hf, sg1]
+wep = [vbow2pt, cstaff, void, rift, q15, dbarrel, concbomb, t2scythe]
+#wep = [cstaff, void, rift, q15, dbarrel]
+arm = [dl, hf]
 misc = [scout, pbot]
 
 #Number of simulation per player
-N = 100
-#N = 20
-
-tstats = 171
+N = 2000
+#N = 100
+#N = 50
 
 #Prints optimization progress for different item combination
 printprogress = True
@@ -142,7 +141,7 @@ def weap1crystopt(p1,p2list,weight,w1crystal,minhp,maxhp,minspeed,maxspeed):
     #stores result here
     result = []
     modules = ("math","copy","numpy","legacyopt","random","legacychance",\
-               "legacystats")
+               "legacystats", "legacycommon")
     depfunc = (legacyopt.opthp,legacyopt.optspeed,legacyopt.optaccdod)
     
     #optimizes crystal for weap1
@@ -198,7 +197,7 @@ def weap2crystopt(p1,p2list,weight,w2crystal,minhp,maxhp,minspeed,maxspeed):
     #stores result here
     result = []
     modules = ("math","copy","numpy","legacyopt","random","legacychance",\
-               "legacystats")
+               "legacystats", "legacycommon")
     depfunc = (legacyopt.opthp,legacyopt.optspeed,legacyopt.optaccdod)
     
     #optimizes crystal for weap2
@@ -253,7 +252,7 @@ def armcrystopt(p1,p2list,weight,acrystal,minhp,maxhp,minspeed,maxspeed):
     #stores result here
     result = []
     modules = ("math","copy","numpy","legacyopt","random","legacychance",\
-               "legacystats")
+               "legacystats", "legacycommon")
     depfunc = (legacyopt.opthp,legacyopt.optspeed,legacyopt.optaccdod)
     
     #optimizes crystal for armor
@@ -309,7 +308,7 @@ def misccrystopt(p1,p2list,weight,mcrystal,minhp,maxhp,minspeed,maxspeed):
     #stores result here
     result = []
     modules = ("math","copy","numpy","legacyopt","random","legacychance",\
-               "legacystats")
+               "legacystats", "legacycommon")
     depfunc = (legacyopt.opthp,legacyopt.optspeed,legacyopt.optaccdod)
     
     #optimizes crystal for misc1

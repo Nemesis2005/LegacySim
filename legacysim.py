@@ -7,6 +7,7 @@
 import math
 import numpy
 import random
+import legacycommon
 #############################################################################
 #user defined functions
 #############################################################################
@@ -27,7 +28,7 @@ def damage(mindam, maxdam, armor, level):
     absorb = 0
     dam = random.randint(mindam,maxdam)
     level = min(level, 80)
-    modifier = level * 3.0/2.0
+    modifier = level * legacycommon.armor_mult
     dam *= (modifier/ (modifier + armor))
     return math.ceil(dam)
 
@@ -138,7 +139,7 @@ def simulation(p1,p2):
 
 #Simulates a battle N times against a list of opponents, N/2 times as 1st player
 #N/2 times as 2nd player
-def simrating(p1,plist,N,weight):
+def simrating(p1 ,plist, N, weight):
     #length of player list
     L = len(plist)
 
@@ -151,15 +152,15 @@ def simrating(p1,plist,N,weight):
         win2 = 0.0
         #N/2 times as attacking player
         for k in range(N/2):
-            w = simulation(p1,plist[i])
+            w = simulation(p1, plist[i])
             #checks who wins and adds it to their win count
             if w == 1:
                 win1 += 1.0
             else:
                 win2 += 1.0
         #N/2 times as defending player
-        for k in range(N/2,N):
-            w = simulation(plist[i],p1)
+        for k in range(N/2, N):
+            w = simulation(plist[i], p1)
             #checks who wins and adds it to their win count
             if w == 2:
                 win1 += 1.0
